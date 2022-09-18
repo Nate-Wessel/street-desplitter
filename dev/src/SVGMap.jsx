@@ -3,7 +3,8 @@ import { geoMercator, geoPath } from 'd3-geo'
 import { bbox2geojson } from './bboxOps.js'
 import { width, height } from './constants.js'
 
-const padding = 50
+const padding = 40
+const dPad = padding*2
 
 export default function SVGMap({osmData,bbox}){
 	const [ { proj }, setProjection ] = useState({proj:geoMercator()})
@@ -12,17 +13,14 @@ export default function SVGMap({osmData,bbox}){
 		if(!bbox) return;
 		setProjection( ({proj}) => {
 			return { proj: proj.fitExtent(
-				[
-					[-width/2+padding, -height/2+padding ],
-					[ width/2-padding,  height/2-padding ]
-				],
+				[[-width/2,-height/2],[width/2,height/2]],
 				bbox2geojson(bbox)
 			) }
 		} )
 	},[bbox])
 	return (
-		<svg viewBox={`${-width/2}, ${-height/2}, ${width}, ${height}`}
-			width={width} height={height}>
+		<svg viewBox={`${-(width+dPad)/2}, ${-(height+dPad)/2}, ${width+dPad}, ${height+dPad}`}
+			width={width+2*padding} height={height+2*padding}>
 			{ osmData && 
 				<g className="nodes">
 					{osmData.nodes.map( ({id,lon,lat}) => {
