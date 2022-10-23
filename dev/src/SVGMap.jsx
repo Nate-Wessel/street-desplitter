@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import { geoMercator, geoPath } from 'd3-geo'
 import { bbox2geojson } from './bboxOps.js'
-import { width, height } from './constants.js'
+import { width, height, padding } from './constants.js'
 
-const padding = 40
 const dPad = padding*2
 
 export default function SVGMap({osmData,bbox}){
@@ -20,12 +19,18 @@ export default function SVGMap({osmData,bbox}){
 	},[bbox])
 	return (
 		<svg viewBox={`${-(width+dPad)/2}, ${-(height+dPad)/2}, ${width+dPad}, ${height+dPad}`}
-			width={width+2*padding} height={height+2*padding}>
+			width={width+2*padding} height={height+2*padding}
+			style={{backgroundColor:"#0001"}}>
 			{ osmData && 
 				<g className="nodes">
 					{osmData.nodes.map( ({id,lon,lat}) => {
 						let [x,y] = proj([lon,lat])
-						return <circle key={id} cx={x} cy={y} r={3}/>
+						return (
+							<circle key={id} 
+								cx={x} cy={y} r={3} 
+								fill="#F008" stroke="crimson"
+							/>
+						)
 					} )}
 				</g>
 			}

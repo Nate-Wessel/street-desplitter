@@ -6,7 +6,7 @@ import { cases } from './testCases.js'
 import { getOsmData } from './getOSM.js'
 import { bounds2bbox } from './bboxOps.js'
 import SVGMap from './SVGMap.jsx'
-import { width, height } from './constants.js'
+import { width, height, padding } from './constants.js'
 
 var map;
 
@@ -35,22 +35,24 @@ export default function Map(){
 	},[testCase])
 	
 	return (
-		<div>
+		<div style={{maxWidth:`${width}px`}}>
 			<Select 
 				value={testCase}
 				options={cases.map(c=>({value:c,...c}))}
 				onChange={setTestCase}
 			/>
-
+			<br/>
 			<div ref={container} className="map-container"
-				style={{height:`${height}px`,width:`${width}px`}}/>
-
+				style={{
+					height:`${height}px`,
+					width:`${width}px`,
+					margin:`${padding}px`
+				}}/>
+			<br/>
 			<button onClick={()=>updateData(bbox)}>
 				get data
 			</button><br/>
-			
-			<code>{JSON.stringify(bbox)}</code>
-			
+			<br/>
 			<SVGMap {...{osmData,bbox}}/>
 		</div>
 	)
