@@ -24,7 +24,7 @@ export default function SVGMap({osmData,bbox}){
 			{ osmData && 
 				<g className="nodes">
 					{osmData.nodes.map( node => {
-						let [x,y] = proj([node.lon,node.lat])
+						let [x,y] = proj(node.coordinates)
 						return (
 							<circle key={node.id} 
 								cx={x} cy={y} r={3} 

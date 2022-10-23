@@ -15,8 +15,7 @@ export class Node extends OSMobject {
 		this.#lat = lat
 		this.#lon = lon
 	}
-	get lon(){ return this.#lon }
-	get lat(){ return this.#lat }
+	get coordinates(){ return [ this.#lon, this.#lat ] }
 }
 
 export class Way extends OSMobject {
@@ -43,10 +42,7 @@ export class WaySegment {
 			type: 'Feature',
 			geometry: {
 				type: 'LineString',
-				coordinates: [
-					[ this.#a.lon, this.#a.lat ],
-					[ this.#b.lon, this.#b.lat ]
-				]
+				coordinates: [ this.#a.coordinates, this.#b.coordinates ]
 			}
 		}
 	}
