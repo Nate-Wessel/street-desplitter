@@ -23,10 +23,10 @@ export default function SVGMap({osmData,bbox}){
 			style={{backgroundColor:"#0001"}}>
 			{ osmData && 
 				<g className="nodes">
-					{osmData.nodes.map( ({id,lon,lat}) => {
-						let [x,y] = proj([lon,lat])
+					{osmData.nodes.map( node => {
+						let [x,y] = proj([node.lon,node.lat])
 						return (
-							<circle key={id} 
+							<circle key={node.id} 
 								cx={x} cy={y} r={3} 
 								fill="#F008" stroke="crimson"
 							/>
@@ -36,13 +36,11 @@ export default function SVGMap({osmData,bbox}){
 			}
 			{ osmData && 
 				<g className="edges">
-					{osmData.edges.map( ({source,target},i) => {
-						let [x1,y1] = proj([source.lon,source.lat])
-						let [x2,y2] = proj([target.lon,target.lat])
+					{osmData.edges.map( (segment,i) => {
 						return (
 							<path key={i}
 								stroke="grey" strokeWidth="1px"
-								d={`M${x1} ${y1} L${x2} ${y2}`}
+								d={pathGen(segment.originalGeometry)}
 							/>
 						)
 					} )}
