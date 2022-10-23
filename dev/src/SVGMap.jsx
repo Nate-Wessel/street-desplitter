@@ -36,9 +36,9 @@ export default function SVGMap({osmData,bbox}){
 			}
 			{ osmData && 
 				<g className="edges">
-					{osmData.edges.map( (segment,i) => {
+					{osmData.edges.map( segment => {
 						return (
-							<path key={i}
+							<path key={segment.id}
 								stroke="grey" strokeWidth="1px"
 								d={pathGen(segment.originalGeometry)}
 							/>

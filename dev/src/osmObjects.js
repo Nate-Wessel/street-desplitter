@@ -37,6 +37,7 @@ export class WaySegment {
 		this.#a = sourceNode
 		this.#b = targetNode
 	}
+	get id(){ return `w${this.#way.id} from n${this.#a.id} to n${this.#b.id}` }
 	get originalGeometry(){
 		return {
 			type: 'Feature',
